@@ -182,7 +182,7 @@ $(document).ready(function () {
         let filteredProducts = [...allProducts]; // Start with a copy of all products
 
         if (selectedCategory !== 'all') {
-            filteredProducts = filteredProducts.filter(p => p.category === selectedCategory);
+            filteredProducts = filteredProducts.filter(p => p.category_id == selectedCategory);
         }
 
         if (searchTerm) {
@@ -592,7 +592,7 @@ $(document).ready(function () {
         if (product) {
             $('#modalProductName').text(product.title);
             $('#modalProductImage').attr('src', product.image).attr('alt', product.title);
-            $('#modalProductCategory').text(product.category);
+            $('#modalProductCategory').text(product.category_name);
             $('#modalProductPrice').text(`$${parseFloat(product.price).toFixed(2)}`);
             $('#modalProductDescription').text(product.description);
 
