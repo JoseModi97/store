@@ -1,11 +1,12 @@
 <?php
 
 namespace frontend\controllers;
-
+use Yii;
 use yii\web\Controller;
 use common\models\Product;
 use common\models\Category;
 use yii\data\ActiveDataProvider;
+use yii\web\NotFoundHttpException;
 
 class ProductController extends Controller
 {
