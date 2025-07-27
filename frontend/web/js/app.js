@@ -173,7 +173,7 @@ $(document).ready(function () {
         const $categoryFilters = $('#category-filters').empty();
         $('<button class="btn btn-outline-secondary active category-filter-btn m-1" data-category="all">All Categories</button>').appendTo($categoryFilters);
         categories.forEach(category => {
-            $(`<button class="btn btn-outline-secondary category-filter-btn m-1" data-category="${category}">${category}</button>`).appendTo($categoryFilters);
+            $(`<button class="btn btn-outline-secondary category-filter-btn m-1" data-category="${category.id}">${category.name}</button>`).appendTo($categoryFilters);
         });
     }
 
