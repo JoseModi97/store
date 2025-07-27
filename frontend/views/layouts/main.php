@@ -41,6 +41,15 @@ AppAsset::register($this);
         ['label' => 'Contact', 'url' => ['/site/contact']],
         ['label' => 'POS', 'url' => ['/product/index']],
     ];
+    if (!Yii::$app->user->isGuest) {
+        $menuItems[] = [
+            'label' => 'Management',
+            'items' => [
+                ['label' => 'Products', 'url' => ['/product/index']],
+                ['label' => 'Categories', 'url' => ['/category/index']],
+            ],
+        ];
+    }
     if (Yii::$app->user->isGuest) {
         $menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
     }
