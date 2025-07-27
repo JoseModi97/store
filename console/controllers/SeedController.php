@@ -3,28 +3,27 @@
 namespace console\controllers;
 
 use yii\console\Controller;
-use common\models\Category;
-use common\models\Product;
-use yii\helpers\FileHelper;
 
 class SeedController extends Controller
 {
     public function actionIndex()
     {
-        $this->seedCategories();
         $this->seedProducts();
+        $this->seedCategories();
     }
 
     private function seedCategories()
     {
         echo "Seeding categories...\n";
-        $categoriesJson = file_get_contents('https://fakestoreapi.com/products/categories');
-        $categories = json_decode($categoriesJson);
+        $categories = file_get_contents('https://fakestoreapi.com/products/categories');
+        $categories = json_decode($categories);
 
-        foreach ($categories as $categoryName) {
-            $category = new Category();
-            $category->name = $categoryName;
-            $category->save();
+        foreach ($categories as $category) {
+            $model = new \common\models\Category();
+            $model->name = $category;
+            $model->created_at = date('Y-m-d H:i:s');
+            $model->updated_at = date('Y-m-d H:i:s');
+            $model->save();
         }
 
         echo "Categories seeded.\n";
@@ -33,34 +32,36 @@ class SeedController extends Controller
     private function seedProducts()
     {
         echo "Seeding products...\n";
-        $productsJson = file_get_contents('https://fakestoreapi.com/products');
-        $products = json_decode($productsJson);
+        $products = file_get_contents('https://fakestoreapi.com/products');
+        $products = json_decode($products);
 
-        $imagesPath = \Yii::getAlias('@frontend/web/images');
-        if (!is_dir($imagesPath)) {
-            FileHelper::createDirectory($imagesPath);
-        }
-
-        foreach ($products as $productData) {
-            $product = new Product();
-            $product->name = $productData->title;
-            $product->description = $productData->description;
-            $product->price = $productData->price;
-
-            $category = Category::findOne(['name' => $productData->category]);
-            if ($category) {
-                $product->category_id = $category->id;
-            }
-
-            $imageUrl = $productData->image;
-            $imageName = basename($imageUrl);
-            $imagePath = $imagesPath . '/' . $imageName;
-            file_put_contents($imagePath, file_get_contents($imageUrl));
-            $product->image = '/images/' . $imageName;
-
-            $product->save();
+        foreach ($products as $product) {
+            $model = new \common\models\Product();
+            $model->title = $product->title;
+            $model->price = $product->price;
+            $model->description = $product->description;
+            $model->category_id = $this->getCategoryId($product->category);
+            $model->image = $this->saveImage($product->image);
+            $model->created_at = date('Y-m-d H:i:s');
+            $model->updated_at = date('Y-m-d H:i:s');
+            $model->save();
         }
 
         echo "Products seeded.\n";
+    }
+
+    private function getCategoryId($categoryName)
+    {
+        $category = \common\models\Category::find()->where(['name' => $categoryName])->one();
+        return $category ? $category->id : null;
+    }
+
+    private function saveImage($imageUrl)
+    {
+        $imageContent = file_get_contents($imageUrl);
+        $imageName = basename($imageUrl);
+        $imagePath = \Yii::getAlias('@frontend/web/images/') . $imageName;
+        file_put_contents($imagePath, $imageContent);
+        return '/images/' . $imageName;
     }
 }

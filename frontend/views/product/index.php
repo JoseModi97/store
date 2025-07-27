@@ -153,7 +153,7 @@ $this->registerCssFile('@web/css/styles.css');
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="productDetailModalLabel">Product Details</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                         <i class="fas fa-times"></i>
                     </button>
                 </div>
@@ -178,7 +178,7 @@ $this->registerCssFile('@web/css/styles.css');
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                         <i class="fas fa-times"></i> Close
                     </button>
                 </div>
