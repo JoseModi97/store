@@ -1,12 +1,13 @@
 <?php
 
 namespace frontend\controllers;
-use Yii;
+
 use yii\web\Controller;
 use common\models\Product;
 use common\models\Category;
 use yii\data\ActiveDataProvider;
-use yii\web\NotFoundHttpException;
+use yii\web\UploadedFile;
+use Yii;
 
 class ProductController extends Controller
 {
@@ -45,8 +46,18 @@ class ProductController extends Controller
     {
         $model = new Product();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index']);
+        if ($model->load(Yii::$app->request->post())) {
+            $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
+            if ($model->imageFile) {
+                $model->image = '/uploads/' . $model->imageFile->baseName . '.' . $model->imageFile->extension;
+            }
+
+            if ($model->save()) {
+                if ($model->imageFile) {
+                    $model->imageFile->saveAs(Yii::getAlias('@frontend/web/uploads/') . $model->imageFile->baseName . '.' . $model->imageFile->extension);
+                }
+                return $this->redirect(['index']);
+            }
         }
 
         return $this->render('create', [
@@ -58,8 +69,18 @@ class ProductController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index']);
+        if ($model->load(Yii::$app->request->post())) {
+            $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
+            if ($model->imageFile) {
+                $model->image = '/uploads/' . $model->imageFile->baseName . '.' . $model->imageFile->extension;
+            }
+
+            if ($model->save()) {
+                if ($model->imageFile) {
+                    $model->imageFile->saveAs(Yii::getAlias('@frontend/web/uploads/') . $model->imageFile->baseName . '.' . $model->imageFile->extension);
+                }
+                return $this->redirect(['index']);
+            }
         }
 
         return $this->render('update', [
