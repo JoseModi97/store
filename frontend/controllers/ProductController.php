@@ -26,8 +26,8 @@ class ProductController extends Controller
     {
         \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
         $products = Product::find()
-            ->select('product.*, category.name as category_name')
-            ->leftJoin('category', 'product.category_id = category.id')
+            ->select('products.*, categories.name as category_name')
+            ->leftJoin('categories', 'products.category_id = categories.id')
             ->asArray()
             ->all();
         return $products;
