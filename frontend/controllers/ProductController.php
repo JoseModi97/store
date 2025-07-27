@@ -22,6 +22,11 @@ class ProductController extends Controller
                         'allow' => true,
                         'roles' => ['@'],
                     ],
+                    [
+                        'actions' => ['get-products', 'get-categories'],
+                        'allow' => true,
+                        'roles' => ['?'],
+                    ],
                 ],
             ],
         ];
