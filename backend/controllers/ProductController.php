@@ -30,7 +30,47 @@ class ProductController extends Controller
         ];
     }
 
+    public function actionIndex()
+    {
+        $productsDataProvider = new ActiveDataProvider([
+            'query' => Product::find(),
+        ]);
+        $categories = Category::find()->all();
 
+        return $this->render('index', [
+            'productsDataProvider' => $productsDataProvider,
+            'categories' => $categories,
+        ]);
+    }
+
+    public function actionList()
+    {
+        $dataProvider = new ActiveDataProvider([
+            'query' => Product::find(),
+        ]);
+
+        return $this->render('list', [
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    public function actionGetProducts()
+    {
+        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        $products = Product::find()
+            ->select('products.*, categories.name as category_name')
+            ->leftJoin('categories', 'products.category_id = categories.id')
+            ->asArray()
+            ->all();
+        return $products;
+    }
+
+    public function actionGetCategories()
+    {
+        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        $categories = Category::find()->asArray()->all();
+        return $categories;
+    }
 
     public function actionCreate()
     {
