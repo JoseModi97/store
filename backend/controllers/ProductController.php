@@ -30,29 +30,6 @@ class ProductController extends Controller
         ];
     }
 
-    public function actionIndex()
-    {
-        $productsDataProvider = new ActiveDataProvider([
-            'query' => Product::find(),
-        ]);
-        $categories = Category::find()->all();
-
-        return $this->render('index', [
-            'productsDataProvider' => $productsDataProvider,
-            'categories' => $categories,
-        ]);
-    }
-
-    public function actionList()
-    {
-        $dataProvider = new ActiveDataProvider([
-            'query' => Product::find(),
-        ]);
-
-        return $this->render('list', [
-            'dataProvider' => $dataProvider,
-        ]);
-    }
 
     public function actionGetProducts()
     {
