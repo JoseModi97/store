@@ -21,4 +21,18 @@ class ProductController extends Controller
             'categories' => $categories,
         ]);
     }
+
+    public function actionGetProducts()
+    {
+        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        $products = Product::find()->asArray()->all();
+        return $products;
+    }
+
+    public function actionGetCategories()
+    {
+        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        $categories = Category::find()->asArray()->all();
+        return $categories;
+    }
 }

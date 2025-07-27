@@ -7,6 +7,7 @@ use yii\widgets\ListView;
 /* @var $categories \common\models\Category[] */
 
 $this->title = 'POS System';
+$this->registerCssFile('@web/css/styles.css');
 ?>
 <div class="site-index">
 
@@ -21,23 +22,48 @@ $this->title = 'POS System';
                     </div>
                 </div>
                 <div id="category-filters" class="mb-3 d-flex flex-wrap">
-                    <button class="btn btn-outline-secondary active category-filter-btn m-1" data-category="all">All Categories</button>
-                    <?php foreach ($categories as $category): ?>
-                        <button class="btn btn-outline-secondary category-filter-btn m-1" data-category="<?= $category->id ?>"><?= Html::encode($category->name) ?></button>
-                    <?php endforeach; ?>
+                    <!-- Skeleton Filter Buttons: Repeat for effect -->
+                    <div class="skeleton skeleton-filter-button mr-2 mb-2" style="height: 38px; width: 120px;"></div>
+                    <div class="skeleton skeleton-filter-button mr-2 mb-2" style="height: 38px; width: 100px;"></div>
+                    <div class="skeleton skeleton-filter-button mr-2 mb-2" style="height: 38px; width: 150px;"></div>
+                    <!-- Actual category filters will replace these via app.js -->
                 </div>
                 <div id="product-grid" class="row">
-                    <?= ListView::widget([
-                        'dataProvider' => $productsDataProvider,
-                        'itemView' => '_product_item',
-                        'summary' => '',
-                        'options' => [
-                            'tag' => false,
-                        ],
-                        'itemOptions' => [
-                            'tag' => false,
-                        ],
-                    ]) ?>
+                    <!-- Skeleton Product Cards: Repeat 3-6 times for effect -->
+                    <div class="col-12 col-md-6 col-lg-4 mb-4 skeleton-card">
+                        <div class="card h-100">
+                            <div class="skeleton skeleton-image" style="height: 180px; margin: 10px;"></div>
+                            <div class="card-body">
+                                <div class="skeleton skeleton-text skeleton-title" style="height: 1.2rem; width: 80%; margin-bottom: 0.75rem;"></div>
+                                <div class="skeleton skeleton-text skeleton-price" style="height: 1rem; width: 40%; margin-bottom: 1rem;"></div>
+                                <div class="skeleton skeleton-text skeleton-stock" style="height: 0.9rem; width: 50%; margin-bottom: 0.5rem;"></div>
+                                <div class="skeleton skeleton-button" style="height: 38px; width: 100%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-4 mb-4 skeleton-card">
+                        <div class="card h-100">
+                            <div class="skeleton skeleton-image" style="height: 180px; margin: 10px;"></div>
+                            <div class="card-body">
+                                <div class="skeleton skeleton-text skeleton-title" style="height: 1.2rem; width: 85%; margin-bottom: 0.75rem;"></div>
+                                <div class="skeleton skeleton-text skeleton-price" style="height: 1rem; width: 30%; margin-bottom: 1rem;"></div>
+                                <div class="skeleton skeleton-text skeleton-stock" style="height: 0.9rem; width: 55%; margin-bottom: 0.5rem;"></div>
+                                <div class="skeleton skeleton-button" style="height: 38px; width: 100%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-4 mb-4 skeleton-card">
+                        <div class="card h-100">
+                            <div class="skeleton skeleton-image" style="height: 180px; margin: 10px;"></div>
+                            <div class="card-body">
+                                <div class="skeleton skeleton-text skeleton-title" style="height: 1.2rem; width: 70%; margin-bottom: 0.75rem;"></div>
+                                <div class="skeleton skeleton-text skeleton-price" style="height: 1rem; width: 45%; margin-bottom: 1rem;"></div>
+                                <div class="skeleton skeleton-text skeleton-stock" style="height: 0.9rem; width: 40%; margin-bottom: 0.5rem;"></div>
+                                <div class="skeleton skeleton-button" style="height: 38px; width: 100%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Actual product cards will replace these via app.js -->
                 </div>
             </div>
 
@@ -158,6 +184,25 @@ $this->title = 'POS System';
         </div>
     </div>
 
+    <!-- Generic Modal for Full Messages -->
+    <div class="modal fade" id="fullMessageModal" tabindex="-1" aria-labelledby="fullMessageModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="fullMessageModalLabel">Full Message</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p id="fullMessageModalBody"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <?php
 $this->registerJsFile('@web/js/app.js', ['depends' => [\yii\web\JqueryAsset::class]]);
