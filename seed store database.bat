@@ -1,1 +1,0 @@
-php yii seed/index
