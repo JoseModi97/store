@@ -58,11 +58,3 @@ frontend
 vendor/                  contains dependent 3rd-party packages
 environments/            contains environment-based overrides
 ```
-
-USER TYPES
-----------
-
-There are two types of users:
-
-- **User**: Can view products and categories.
-- **Admin**: Can manage products and categories.
