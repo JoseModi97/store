@@ -4,6 +4,7 @@ namespace frontend\controllers;
 
 use yii\web\Controller;
 use common\models\Product;
+use yii\filters\AccessControl;
 use common\models\Category;
 use yii\data\ActiveDataProvider;
 use yii\web\UploadedFile;
@@ -11,6 +12,24 @@ use Yii;
 
 class ProductController extends Controller
 {
+    public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::class,
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['@'],
+                        'matchCallback' => function ($rule, $action) {
+                            return Yii::$app->user->identity->role == \common\models\User::ROLE_ADMIN;
+                        }
+                    ],
+                ],
+            ],
+        ];
+    }
+
     public function actionIndex()
     {
         $productsDataProvider = new ActiveDataProvider([
