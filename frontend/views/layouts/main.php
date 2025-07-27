@@ -45,7 +45,7 @@ AppAsset::register($this);
         $menuItems[] = [
             'label' => 'Management',
             'items' => [
-                ['label' => 'Products', 'url' => ['/product/index']],
+                ['label' => 'Products', 'url' => ['/product/list']],
                 ['label' => 'Categories', 'url' => ['/category/index']],
             ],
         ];

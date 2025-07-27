@@ -24,6 +24,17 @@ class ProductController extends Controller
         ]);
     }
 
+    public function actionList()
+    {
+        $dataProvider = new ActiveDataProvider([
+            'query' => Product::find(),
+        ]);
+
+        return $this->render('list', [
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
     public function actionGetProducts()
     {
         \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
