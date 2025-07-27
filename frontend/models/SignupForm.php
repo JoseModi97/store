@@ -55,7 +55,7 @@ class SignupForm extends Model
         $user->setPassword($this->password);
         $user->generateAuthKey();
         $user->generateEmailVerificationToken();
-        $user->role = User::ROLE_USER;
+        $user->role = \common\models\User::ROLE_USER;
 
         return $user->save() && $this->sendEmail($user);
     }
